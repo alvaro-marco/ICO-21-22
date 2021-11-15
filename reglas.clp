@@ -1,6 +1,10 @@
 (defrule Saludo
     (object (is-a SESION) (nombreJuego ?j) (nombreBambino ?b))
-    (object (is-a LISTAPERSONALIDADES ())
+    (object (is-a LISTAPERSONALIDADES (adaptadoA ?pers) (saludo ?s))
+    (object (is-a BAMBINO)(personalidad ?pers)))
+    =>
+    (printout  s  crlf)
+    
 )
 
 

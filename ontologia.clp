@@ -1,4 +1,3 @@
-
 (defclass SESION (is-a USER)
     (slot nombreJuego (type SYMBOL)(allowed-values oca rayuela))
     (slot nombreBambino (type STRING))
@@ -9,6 +8,7 @@
 )
 (defclass BAMBINO (is-a JUGADOR)
     (slot nombre (type STRING))
+    (slot saludo (type STRING))
     (slot personalidad (type SYMBOL)(allowed-values timido torpe))
     (slot estado (type SYMBOL)(allowed-values normal llorando escondido gritando)(default normal))
 )
@@ -42,7 +42,7 @@
 )
 
 (defclass TURNO (is-a USER)
-    (slot fase (type SYMBOL)(allowed-values saludo explicacion cambioTurno tirada movimiento fin)) 
+    (slot fase (type SYMBOL)(allowed-values saludo cambioTurno tirada movimiento fin)) 
     (slot valorDado (type INTEGER)(range 1 8)
     (slot jugador (type SYMBOL)
 )

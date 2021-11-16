@@ -1,7 +1,7 @@
 (definstances jugador
     (of ROBOT)
     (of BAMBINO (nombre Giuseppe)(saludo Hola, bichito)(personalidad timido))
-    (of BAMBINO (nombre Franchesca)(saludo General Kenoby)(personalidad torpe)
+    (of BAMBINO (nombre Franchesca)(saludo General Kenoby)(personalidad torpe))
 )
 (definstances juegos
     (of JUEGO (nombre oca)(maxCasillas 40)(rondas 1))

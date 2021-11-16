@@ -15,14 +15,14 @@
 (defclass ROBOT (is-a JUGADOR)
     (slot ayudasRealizadas (type INTEGER)(default 0))
 )
-(defclass LISTAREACCIONES)
+(defclass LISTAREACCIONES (is-a USER)
     (slot estado (type SYMBOL))
     (slot reaccion (type STRING))
     (slot nombreJuego (type SYMBOL))
     (slot fase (type SYMBOL))
     ;; (slot personalidad (type SYMBOL))
 )
-(defclass LISTAPERSONALIDADES
+(defclass LISTAPERSONALIDADES (is-a USER)
     (slot adaptadoA (type SYMBOL))
     (slot saludo (type STRING))
     (slot reglas (type STRING))
@@ -43,8 +43,8 @@
 
 (defclass TURNO (is-a USER)
     (slot fase (type SYMBOL)(allowed-values saludo cambioTurno tirada movimiento fin)) 
-    (slot valorDado (type INTEGER)(range 1 8)
-    (slot jugador (type SYMBOL)
+    (slot valorDado (type INTEGER)(range 1 8))
+    (slot jugador (type SYMBOL))
 )
 
 (defclass DADO (is-a USER)

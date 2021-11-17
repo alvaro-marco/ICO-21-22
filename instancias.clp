@@ -1,7 +1,7 @@
 (definstances jugador
     (of ROBOT)
-    (of BAMBINO (nombre Giuseppe)(saludo Hola, bichito)(personalidad timido))
-    (of BAMBINO (nombre Franchesca)(saludo General Kenoby)(personalidad torpe))
+    (of BAMBINO (nombre Giuseppe)(saludo "Hola, bichito")(personalidad timido))
+    (of BAMBINO (nombre Franchesca)(saludo "General Kenoby")(personalidad torpe))
 )
 (definstances juegos
     (of JUEGO (nombre oca)(maxCasillas 40)(rondas 1))
@@ -10,12 +10,21 @@
 
 ;; Definimos las intancias en las que se especifica cuales son las interacciones del robot
 (definstances listaReacciones
-    (of LISTAREACCIONES)
+    (of LISTAREACCIONES (estado "Llorando")(reaccion "Ea, ea, a llorar a la llorería")(nombreJuego oca)(fase cambioTurno))
+    (of LISTAREACCIONES (estado "Escondido")(reaccion "No te escondas, ¡qué no pasa nada!")(nombreJuego oca)(fase cambioTurno))
+    (of LISTAREACCIONES (estado "Gritando")(reaccion "Vamos a tranquilizarnos, respira conmigo, uuuuuuufff aaaaaaafff uuuuuuuuf affffff")(nombreJuego oca)(fase cambioTurno))
+    (of LISTAREACCIONES (estado "Gritando")(reaccion "Vamos a tranquilizarnos, respira conmigo, uuuuuuufff aaaaaaafff uuuuuuuuf affffff")(nombreJuego oca)(fase movimiento))
+    (of LISTAREACCIONES (estado "Tirado")(reaccion "No pasa nada porque te hayas caído, inténtalo otra vez, que ya verás que esta vez lo consigues")(nombreJuego rayuela)(fase movimiento))
+)
+
     ;;POR HACERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+
 
 )
 (definstances listaPersonalidades
-    (of LISTAPERSONALIDADES)
+    (of LISTAPERSONALIDADES (adaptadoA timido) (saludo "(Hablando más bajo que el estándar y despacio) ¡Hola pequeñín! Vamos a jugar a ") (juego oca)(reglas "En este juego se tira el dado y dependiendo de la casilla en la que se caiga al sumar el valor del dado se queda uno donde está, se avanza, se retrocede o se pierde turno. El que llegue a la Oca final antes gana el juego. "))
+
+)
     ;;POR HACERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
 )
 
@@ -55,7 +64,7 @@
     (of CASILLA (tipo normal)(posicion 11)(nombreJuego oca))
     (of CASILLA (tipo normal)(posicion 12)(nombreJuego oca))
     (of CASILLA (tipo normal)(posicion 13)(nombreJuego oca))
-    (of CASILLA (tipo retrocede)(nuevoValorDado 7)(posicion 14)(nombreJuego oca))
+    (of CASILLA (tipo retrocede)(nuevoValorDado -7)(posicion 14)(nombreJuego oca))
     (of CASILLA (tipo avanza)(nuevoValorDado 5)(posicion 15)(nombreJuego oca))
     (of CASILLA (tipo normal)(posicion 16)(nombreJuego oca))
     (of CASILLA (tipo normal)(posicion 17)(nombreJuego oca))

@@ -1,3 +1,10 @@
+(defrule pocoAPoco ;; Esta regla inicializa la sesión, saluda y explica las reglas
+  (object (is-a JUEGO)(nombre ?juego))
+  (object (is-a LISTAPERSONALIDADES) (adaptadoA ?pers) (saludo ?sal)(reglas ?r))
+    =>
+    (printout "Prueba")
+)
+
 (defrule crearSesion ;; Esta regla inicializa la sesión, saluda y explica las reglas
   (not(object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam))) ;; DUDA: se hace así que no haya una instancia de sesión???
   (object (is-a JUEGO)(nombre ?juego))
@@ -33,14 +40,26 @@
   ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)) ;; Que la fase de juego sea tirar dado/piedra
   ;;Instancias necesarias
   ?jugador <- (is-a JUGADOR)(posicion ?posJug)
-  ?casilla <- (is-a CASILLA)(nombreJuego ?juego)(tipo normal)(posicion ?posCas);;Tenemos que comprobar que esto sea la casilla del jugador _____________________________________
-  ;;Sumamos el avance del dado
-  (modify-instance ?jugador (posicion (+ ?posJug ?dado)))
-  (modify-instance ?turno (fase cambioTurno))
+  ?casilla <- (is-a CASILLA)(nombreJuego ?juego)(tipo normal)(posicion ?posCas)
+  (test (= ?posCas (+ ?posJug ?dado)))
+  =>
+  (modify-instance ?jugador (posicion (+ ?posJug ?dado)));;Sumamos el avance marcado en el dado
+  (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
 )
 
-
-
+(defrule CasillaAvanzaOca
+  ;;Condiciones necesarias
+  (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam)) ;; Que exista una sesión
+  ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)) ;; Que la fase de juego sea tirar dado/piedra
+  ;;Instancias necesarias
+  ?jugador <- (is-a JUGADOR)(posicion ?posJug)
+  ?casilla <- (is-a CASILLA)(nombreJuego ?juego)(tipo normal)(posicion ?posCas) (nuevoValorDado ?sumar)
+  (test (= ?posCas (+ ?posJug ?dado)))
+  =>
+  (modify-instance ?jugador (posicion (+ ?sumar (+ ?posJug ?dado)));;Sumamos el avance marcado en el dado
+  (printout t "De oca en oca y tiro porque me toca" crlf) 
+  (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
+)
 
 
 

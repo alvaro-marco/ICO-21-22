@@ -25,6 +25,7 @@
 (defclass LISTAPERSONALIDADES (is-a USER)
     (slot adaptadoA (type SYMBOL))
     (slot saludo (type STRING))
+    (slot juego(type SYMBOL))
     (slot reglas (type STRING))
 )
 

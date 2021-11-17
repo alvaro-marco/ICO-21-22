@@ -7,11 +7,12 @@
     ;;Inicializar sesión
     (make-instance of SESION (nombreJuego ?juego)(nombreBambino ?bam)) ;; Creamos la instancia sesión para consultar en el resto de reglas
     ;;Saludo
-    (printout t "¡Hola, " ?bam "!," ?sal  crlf)
-    (printout t ?salBambino)
+    (printout t "¡Hola, " ?bam "! " ?sal  crlf)
+    (printout t ?salBambino crlf)
     ;;Reglas
     (printout t "Te cuento las reglas:" crlf ?r crlf)
     (printout t "¡Entendido!" crlf)
+    (printout t "Venga, enconces empiezo yo, así ves como se juega" crlf)
     ;;Creamos el turno y cambiamos la fase
     (make-instance of TURNO (fase tirada)(jugador robot)) ;; Creamos la instancia sesión para consultar en el resto de reglas
 )
@@ -28,32 +29,72 @@
   (printout t "He sacado un " ?dado crlf)
 )
 
+(defrule CambiarTurnoaBambino
+  (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam))
+  ?turno <- (object (is-a TURNO) (fase tirada))(jugador robot)
+  =>
+  ;movimiento
+  (modify-instance ?turno (jugador bambino))
+)
+defrule CambiarTurnoaRobot
+  (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam))
+  ?turno <- (object (is-a TURNO) (fase tirada))(jugador bambino)
+  =>
+  ;movimiento
+  (modify-instance ?turno (jugador robot))
+)
+
+
 (defrule CasillaNormalOca
   ;;Condiciones necesarias
-  (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam)) ;; Que exista una sesión
+  (object (is-a SESION) (nombreJuego oca) (nombreBambino ?bam)) ;; Que exista una sesión
   ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)) ;; Que la fase de juego sea tirar dado/piedra
   ;;Instancias necesarias
   ?jugador <- (is-a JUGADOR)(posicion ?posJug)
-  ?casilla <- (is-a CASILLA)(nombreJuego ?juego)(tipo normal)(posicion ?posCas)
+  ?casilla <- (is-a CASILLA)(nombreJuego oca)(tipo normal)(posicion ?posCas)
   (test (= ?posCas (+ ?posJug ?dado)))
   =>
   (modify-instance ?jugador (posicion (+ ?posJug ?dado)));;Sumamos el avance marcado en el dado
   (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
 )
 
+;; en esta regla se añaden tanto las casillas oca, como las puente, como la muerte (avance y retroceso)
 (defrule CasillaAvanzaRetrocedeOca
   ;;Condiciones necesarias
-  (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam)) ;; Que exista una sesión
+  (object (is-a SESION) (nombreJuego oca) (nombreBambino ?bam)) ;; Que exista una sesión
   ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)) ;; Que la fase de juego sea tirar dado/piedra
   ;;Instancias necesarias
   ?jugador <- (is-a JUGADOR)(posicion ?posJug)
-  ?casilla <- (is-a CASILLA)(nombreJuego ?juego)(tipo movextra)(posicion ?posCas) (nuevoValorDado ?sumar)
+  ?casilla <- (is-a CASILLA)(nombreJuego oca)(tipo movextra)(posicion ?posCas) (nuevoValorDado ?sumar)
   (test (= ?posCas (+ ?posJug ?dado)))
   =>
   (modify-instance ?jugador (posicion (+ ?sumar (+ ?posJug ?dado))));;Sumamos el avance marcado en el dado
   (printout t "De oca en oca y tiro porque me toca" crlf) 
   (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
 )
+
+(defrule CasillaEspera
+  ;;Condiciones necesarias
+  (object (is-a SESION) (nombreJuego oca) (nombreBambino ?bam)) ;; Que exista una sesión
+  ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)) ;; Que la fase de juego sea tirar dado/piedra
+  ;;Instancias necesarias
+  ?jugador <- (is-a JUGADOR)(posicion ?posJug)
+  ?casilla <- (is-a CASILLA)(nombreJuego oca)(tipo espera)(posicion ?posCas)
+  (test (= ?posCas (+ ?posJug ?dado)))
+  =>
+  (modify-instance ?jugador (posicion (+ ?posJug ?dado)));;Sumamos el avance marcado en el dado
+  ;; (modify-instance ?jugador2 (numTurnos (+ ?nT 1))) habria que cambiar el numero de turnos del jugador que no ha caido en la carcel
+  (printout t "Pierdes un turno, has caido en la carcel" crlf) 
+  (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
+)
+
+
+
+
+
+
+
+
 
 
 

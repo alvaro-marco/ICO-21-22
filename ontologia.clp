@@ -5,6 +5,7 @@
 (defclass JUGADOR (is-a USER)
     (slot rondasGanadas (type INTEGER)(default 0))
     (slot posicion (type INTEGER)(default 0))
+    (slot numTurnos (type INTEGER)(default 1))
 )
 (defclass BAMBINO (is-a JUGADOR)
     (slot nombre (type STRING))

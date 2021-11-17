@@ -20,7 +20,6 @@
     (slot reaccion (type STRING))
     (slot nombreJuego (type SYMBOL))
     (slot fase (type SYMBOL))
-    ;; (slot personalidad (type SYMBOL))
 )
 (defclass LISTAPERSONALIDADES (is-a USER)
     (slot adaptadoA (type SYMBOL))
@@ -37,7 +36,7 @@
 
 (defclass CASILLA (is-a USER)
     (slot nombreJuego (type SYMBOL))
-    (slot tipo (type SYMBOL)(allowed-values normal inicial final espera retrocede avanza piedra)(default normal))
+    (slot tipo (type SYMBOL)(allowed-values normal inicial final espera movextra piedra)(default normal))
     (slot posicion (type INTEGER)(range 0 40))
     (slot nuevoValorDado (type INTEGER)(default 0))
 )

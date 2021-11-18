@@ -8,12 +8,22 @@
     (slot numTurnos (type INTEGER)(default 1))
 )
 (defclass BAMBINO (is-a JUGADOR)
+    ;; Los atributos de la clase padre
+    (slot rondasGanadas (source composite))
+    (slot posicion (source composite))
+    (slot numTurnos (source composite))
     (slot nombre (type STRING))
     (slot saludo (type STRING))
+    ;;Los atributos propios
     (slot personalidad (type SYMBOL)(allowed-values timido torpe))
     (slot estado (type SYMBOL)(allowed-values normal llorando escondido gritando)(default normal))
 )
 (defclass ROBOT (is-a JUGADOR)
+    ;;Los atributos de la clase padre
+    (slot rondasGanadas (source composite))
+    (slot posicion (source composite))
+    (slot numTurnos (source composite))
+    ;;Los atributos propios
     (slot ayudasRealizadas (type INTEGER)(default 0))
 )
 (defclass LISTAREACCIONES (is-a USER)

@@ -33,13 +33,13 @@
 ;; Definimos las instancias para las casillas de los dos juegos y el dado
 (definstances dado ;; El dado representa tanto la tirada del dado de oca y el lanzamiento de la piedra en la rayuela
     (of DADO (valorDado 1))
-    (of DADO (valorDado 2))
-    (of DADO (valorDado 3))
-    (of DADO (valorDado 4))
-    (of DADO (valorDado 5))
-    (of DADO (valorDado 6))
-    (of DADO (valorDado 7)) ;; Los valores a partir de 6 se considerán fallos
-    (of DADO (valorDado 8))
+    ; (of DADO (valorDado 2))
+    ; (of DADO (valorDado 3))
+    ; (of DADO (valorDado 4))
+    ; (of DADO (valorDado 5))
+    ; (of DADO (valorDado 6))
+    ; (of DADO (valorDado 7)) ;; Los valores a partir de 6 se considerán fallos
+    ; (of DADO (valorDado 8))
 )
 (definstances casillaRayuela ;; El valor piedra se definirá en la tirada de cada jugador
     (of CASILLA (tipo normal)(posicion 0)(nombreJuego rayuela))

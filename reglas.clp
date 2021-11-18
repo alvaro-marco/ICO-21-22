@@ -30,20 +30,20 @@
   (printout t "He sacado un " ?dado crlf)
 )
 
-; (defrule CambiarTurnoaBambino
-;   (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam))
-;   ?turno <- (object (is-a TURNO) (fase tirada))(jugador robot)
-;   =>
-;   ;movimiento
-;   (modify-instance ?turno (jugador bambino))
-; )
-; (defrule CambiarTurnoaRobot)
-;   (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam))
-;   ?turno <- (object (is-a TURNO) (fase tirada))(jugador bambino)
-;   =>
-;   ;movimiento
-;   (modify-instance ?turno (jugador robot))
-; )
+(defrule CambiarTurnoaBambino
+  (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam))
+  ?turno <- (object (is-a TURNO) (fase cambioTurno)(jugador robot))
+  =>
+  (printout t "Venga, ahora es tu turno, bambino" crlf)
+  (modify-instance ?turno (jugador bambino)(fase tirada))
+)
+(defrule CambiarTurnoaRobot
+  (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam))
+  ?turno <- (object (is-a TURNO) (fase cambioTurno)(jugador bambino))
+  =>
+  (printout t "Te toca a tí, señor robot" crlf)
+  (modify-instance ?turno (jugador robot)(fase tirada))
+)
 
 
 (defrule CasillaNormalOca

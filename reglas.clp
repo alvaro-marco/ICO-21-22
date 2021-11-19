@@ -67,18 +67,19 @@
   ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)) ;; Que la fase de juego sea tirar dado/piedra
   ;;Instancias necesarias
   ?jugador <- (object(is-a JUGADOR)(posicion ?posJug))
-  ?casilla <- (object(is-a CASILLA)(nombreJuego oca)(tipo movextra)(posicion ?posCas) (nuevoValorDado ?sumar))
-  (test (= ?posCas (+ ?posJug ?dado)))
+  ?posCas<- (+ ?posJug ?dado)
+  ?casilla <- (object(is-a CASILLA)(nombreJuego oca)(tipo movextra)(posicion ?posCas) (nuevoValorDado ?sumar) (mensaje ?mensaje))
+  ;;(test (= ?posCas (+ ?posJug ?dado)))
   =>
   (modify-instance ?jugador (posicion (+ ?sumar (+ ?posJug ?dado))));;Sumamos el avance marcado en el dado
-  (printout t "De oca en oca y tiro porque me toca" crlf) 
+  (printout t ?mensaje crlf) 
   (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
 )
 ;PREGUNTAS
 ;SE PUEDE HACER NOMBRE JUEGO ?NOMJUEGO Y HACERLO PARA AMBAS, CON EL VALOR DE RONDAS SE DEBERÍA PODER CREO
 
 (defrule Casillafin
-  ;;Condiciones necesarias
+  ;; Condiciones necesarias
   ;; el numero de rondas para ganar de juego tiene que ser el mismo que el numero de rondas ganadas para el jugador
   ;; 1 para la oca y 3 para la rayuela
   ;; la casilla tiene que ser de tipo final
@@ -90,12 +91,11 @@
   ?jugador <- (object(is-a JUGADOR)(posicion ?posJug)(rondasGanadas ?rondas))
   ?casilla <- (object(is-a CASILLA)(nombreJuego ?juego)(tipo final)(posicion ?posCas))
    ; si es solo para la oca posicion seria 40, sino no hace falta ponerlo 
-  (test (= ?posCas (+ ?posJug ?dado)))
+  (test (> ?posCas (+ ?posJug (- ?dado 1)))
   
   =>
-  ;;este primer modify instance creo que no haría falta porque ya se sabría con el test de arriba que s eha llegado al final, 
-  ;; no hace falta cambiar la posición del jugador porque no se va a utilizar despues, se termina el juego
-  (modify-instance ?jugador (posicion (+ ?posJug ?dado)));;Sumamos el avance marcado en el dado
+  ;;este primer modify instance creo que no haría falta porque ya se sabría con el test de arriba que se ha llegado al final, 
+  ;; no hace falta cambiar la posición del jugador porque no se va a utilizar despues, se termina el juego 
   (modify-instance ?turno (fase fin));; Cambio de fase para que juegue el siguiente
   (printout t  "Avanzo " ?dado " casillas, hasta la posición " (+ ?posJug ?dado) crlf)
   (printout t "¡¡Fin del juego!! se ha llegado a la casilla final")

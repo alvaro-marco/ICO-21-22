@@ -50,6 +50,7 @@
     (slot tipo (type SYMBOL)(allowed-values normal inicial final espera movextra piedra)(default normal))
     (slot posicion (type INTEGER)(range 0 40))
     (slot nuevoValorDado (type INTEGER)(default 0))
+    (slot mensaje (type STRING))
 )
 
 (defclass TURNO (is-a USER)

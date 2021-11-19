@@ -24,8 +24,8 @@
     ;;Creamos el turno, cambiamos la fase y eliminamos la instancia del otro niño
     (send ?elOtro delete)
     (make-instance of TURNO (fase tirada)(jugador "robot")) ;; Creamos la instancia sesión para consultar en el resto de reglas
-    (assert (siguiente("robot" ?bam)))
-    (assert (siguiente (?bam "robot"))
+    (assert (siguiente)("robot" ?bam))
+    (assert (siguiente )(?bam "robot"))
 )
 
 
@@ -49,14 +49,6 @@
   (modify-instance ?turno (jugador ?jug1)(fase tirada))
 )
 
-
-(defrule CambiarTurnoaRobot
-  (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam))
-  ?turno <- (object (is-a TURNO) (fase cambioTurno)(jugador ?bam))
-  =>
-  (printout t "Te toca a tí, señor robot" crlf)
-  (modify-instance ?turno (jugador "robot")(fase tirada))
-)
 
 
 (defrule CasillaNormalOca

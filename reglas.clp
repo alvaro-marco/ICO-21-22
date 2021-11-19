@@ -93,6 +93,8 @@
   (test (= ?posCas (+ ?posJug ?dado)))
   
   =>
+  ;;este primer modify instance creo que no haría falta porque ya se sabría con el test de arriba que s eha llegado al final, 
+  ;; no hace falta cambiar la posición del jugador porque no se va a utilizar despues, se termina el juego
   (modify-instance ?jugador (posicion (+ ?posJug ?dado)));;Sumamos el avance marcado en el dado
   (modify-instance ?turno (fase fin));; Cambio de fase para que juegue el siguiente
   (printout t  "Avanzo " ?dado " casillas, hasta la posición " (+ ?posJug ?dado) crlf)

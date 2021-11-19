@@ -87,7 +87,7 @@
     (of CASILLA (tipo normal)(posicion 32)(nombreJuego oca))
     (of CASILLA (tipo normal)(posicion 33)(nombreJuego oca))
     (of CASILLA (tipo normal)(posicion 34)(nombreJuego oca))
-    (of CASILLA (tipo movextra)(nuevoValorDado 5)(posicion 35)(nombreJuego oca)(mensaje "De oca en oca y tiro porque me toca"))
+    (of CASILLA (tipo normal)(posicion 35)(nombreJuego oca))
     (of CASILLA (tipo movextra)(nuevoValorDado -36)(posicion 36)(nombreJuego oca)(mensaje "¡Uy caiste en la muerte, tienes que volver a empezar!"))
     (of CASILLA (tipo normal)(posicion 37)(nombreJuego oca))
     (of CASILLA (tipo normal)(posicion 38)(nombreJuego oca))

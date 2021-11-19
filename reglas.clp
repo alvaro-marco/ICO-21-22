@@ -2,6 +2,7 @@
   (not(object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam))) ;; DUDA: se hace así que no haya una instancia de sesión???
   (object (is-a JUEGO)(nombre ?juego))
   (object (is-a BAMBINO)(nombre ?bam)(saludo ?salBambino)(personalidad ?pers))
+  ?elOtro <- (object(is-a BAMBINO))
   (object (is-a LISTAPERSONALIDADES)(juego ?juego)(adaptadoA ?pers)(saludo ?sal)(reglas ?r))
     =>
     ;;Inicializar sesión
@@ -14,7 +15,8 @@
     (printout t "Te cuento las reglas:" crlf ?r crlf)
     (printout t "¡Entendido!" crlf)
     (printout t "Venga, enconces empiezo yo, así ves como se juega" crlf)
-    ;;Creamos el turno y cambiamos la fase
+    ;;Creamos el turno, cambiamos la fase y eliminamos la instancia del otro niño
+    (send ?elOtro delete)
     (make-instance of TURNO (fase tirada)(jugador robot)) ;; Creamos la instancia sesión para consultar en el resto de reglas
 )
 
@@ -57,7 +59,7 @@
   =>
   (modify-instance ?jugador (posicion (+ ?posJug ?dado)));;Sumamos el avance marcado en el dado
   (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
-  (printout t  "Avanzo " ?dado " casillas, hasta la posición " (+ ?posJug ?dado) crlf)
+  (printout t  "Estoy en la posicion " ?posJug ", avanzo " ?dado " casillas, hasta la posición " (+ ?posJug ?dado) crlf)
 )
 
 ; ;; en esta regla se añaden tanto las casillas oca, como las puente, como la muerte (avance y retroceso)
@@ -67,40 +69,40 @@
   ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)) ;; Que la fase de juego sea tirar dado/piedra
   ;;Instancias necesarias
   ?jugador <- (object(is-a JUGADOR)(posicion ?posJug))
-  ?posCas<- (+ ?posJug ?dado)
   ?casilla <- (object(is-a CASILLA)(nombreJuego oca)(tipo movextra)(posicion ?posCas) (nuevoValorDado ?sumar) (mensaje ?mensaje))
-  ;;(test (= ?posCas (+ ?posJug ?dado)))
+  (test (= ?posCas (+ ?posJug ?dado)))
   =>
   (modify-instance ?jugador (posicion (+ ?sumar (+ ?posJug ?dado))));;Sumamos el avance marcado en el dado
   (printout t ?mensaje crlf) 
   (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
+  (printout t  "Estoy en la posicion " ?posJug ", avanzo " ?dado " casillas, hasta la posición " (+ ?posJug ?dado) crlf)
 )
 ;PREGUNTAS
 ;SE PUEDE HACER NOMBRE JUEGO ?NOMJUEGO Y HACERLO PARA AMBAS, CON EL VALOR DE RONDAS SE DEBERÍA PODER CREO
 
-(defrule Casillafin
-  ;; Condiciones necesarias
-  ;; el numero de rondas para ganar de juego tiene que ser el mismo que el numero de rondas ganadas para el jugador
-  ;; 1 para la oca y 3 para la rayuela
-  ;; la casilla tiene que ser de tipo final
-  ;; el juego de la sesion no se define para que puedan ser ambos
-  (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam)) ;; Que exista una sesión
-  ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)) ;; Que la fase de juego sea tirar dado/piedra
-  ;;Instancias necesarias
-  ?juego <- (object(is-a JUEGO) (nombre ?juego) (rondas ?rondas)) 
-  ?jugador <- (object(is-a JUGADOR)(posicion ?posJug)(rondasGanadas ?rondas))
-  ?casilla <- (object(is-a CASILLA)(nombreJuego ?juego)(tipo final)(posicion ?posCas))
-   ; si es solo para la oca posicion seria 40, sino no hace falta ponerlo 
-  (test (> ?posCas (+ ?posJug (- ?dado 1)))
+; (defrule Casillafin
+;   ;; Condiciones necesarias
+;   ;; el numero de rondas para ganar de juego tiene que ser el mismo que el numero de rondas ganadas para el jugador
+;   ;; 1 para la oca y 3 para la rayuela
+;   ;; la casilla tiene que ser de tipo final
+;   ;; el juego de la sesion no se define para que puedan ser ambos
+;   (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam)) ;; Que exista una sesión
+;   ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)) ;; Que la fase de juego sea tirar dado/piedra
+;   ;;Instancias necesarias
+;   ?juego <- (object(is-a JUEGO) (nombre ?juego) (rondas ?rondas)) 
+;   ?jugador <- (object(is-a JUGADOR)(posicion ?posJug)(rondasGanadas ?rondas))
+;   ?casilla <- (object(is-a CASILLA)(nombreJuego ?juego)(tipo final)(posicion ?posCas))
+;    ; si es solo para la oca posicion seria 40, sino no hace falta ponerlo 
+;   (test (> ?posCas (+ ?posJug (- ?dado 1)))
   
-  =>
-  ;;este primer modify instance creo que no haría falta porque ya se sabría con el test de arriba que se ha llegado al final, 
-  ;; no hace falta cambiar la posición del jugador porque no se va a utilizar despues, se termina el juego 
-  (modify-instance ?turno (fase fin));; Cambio de fase para que juegue el siguiente
-  (printout t  "Avanzo " ?dado " casillas, hasta la posición " (+ ?posJug ?dado) crlf)
-  (printout t "¡¡Fin del juego!! se ha llegado a la casilla final")
-  (halt)
-)
+;   =>
+;   ;;este primer modify instance creo que no haría falta porque ya se sabría con el test de arriba que se ha llegado al final, 
+;   ;; no hace falta cambiar la posición del jugador porque no se va a utilizar despues, se termina el juego 
+;   (modify-instance ?turno (fase fin));; Cambio de fase para que juegue el siguiente
+;   (printout t  "Avanzo " ?dado " casillas, hasta la posición " (+ ?posJug ?dado) crlf)
+;   (printout t "¡¡Fin del juego!! se ha llegado a la casilla final")
+;   (halt)
+; )
   
   
   

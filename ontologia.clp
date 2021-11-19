@@ -62,4 +62,3 @@
 (defclass DADO (is-a USER)
     (slot valorDado (type INTEGER)(range 1 8))
 )
-

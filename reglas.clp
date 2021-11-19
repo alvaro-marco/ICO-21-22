@@ -120,6 +120,22 @@
 ;   (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
 ; )
 
+;;Reglas de la Rayuela
+;; preguntas
+;; el jugador salta y completara una ronda si se cumplen las siguientes condiciones:
+; el jugador no se cae 
+; el jugador no pisa una línea
+; el jugador salta la casilla en la que está la piedra
+; el jugador llega al final y cambia de dirección
+; el jugador recoge la piedra
+; el jugador llega otra vez a la casilla de inicio 
+; rondas ganadas += 1
+
+;;DILEMAS
+;; se obtiene el valor del dado
+;; se salta de uno en uno?
+;; como se avanza 
+;; como se retrocede
 
 
 

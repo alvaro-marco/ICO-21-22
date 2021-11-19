@@ -104,23 +104,26 @@
   (halt)
 )
   
-  ;(defrule Salt)
+  (defrule SaltaRayuela
+  (object (is-a SESION) (nombreJuego rayuela) (nombreBambino ?bam)) 
+  
+  )
   
 
-; (defrule CasillaEspera
-;   ;;Condiciones necesarias
-;   (object (is-a SESION) (nombreJuego oca) (nombreBambino ?bam)) ;; Que exista una sesión
-;   ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)) ;; Que la fase de juego sea tirar dado/piedra
-;   ;;Instancias necesarias
-;   ?jugador <- (object(is-a JUGADOR)(posicion ?posJug))
-;   ?casilla <- (object(is-a CASILLA)(nombreJuego oca)(tipo espera)(posicion ?posCas))
-;   (test (= ?posCas (+ ?posJug ?dado)))
-;   =>
-;   (modify-instance ?jugador (posicion (+ ?posJug ?dado)));;Sumamos el avance marcado en el dado
-;   ;; (modify-instance ?jugador2 (numTurnos (+ ?nT 1))) habria que cambiar el numero de turnos del jugador que no ha caido en la carcel
-;   (printout t "Pierdes un turno, has caido en la carcel" crlf) 
-;   (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
-; )
+(defrule CasillaEspera
+  ;;Condiciones necesarias
+  (object (is-a SESION) (nombreJuego oca) (nombreBambino ?bam)) ;; Que exista una sesión
+  ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)(jugador ?nomJug)) ;; Que la fase de juego sea tirar dado/piedra
+  ;;Instancias necesarias
+  ?jugador <- (object(is-a JUGADOR)(posicion ?posJug)(nombre ?nomJug))
+  ?casilla <- (object(is-a CASILLA)(nombreJuego oca)(tipo espera)(posicion ?posCas))
+  (test (= ?posCas (+ ?posJug ?dado)))
+  =>
+  (modify-instance ?jugador (posicion (+ ?posJug ?dado)));;Sumamos el avance marcado en el dado
+  ;; (modify-instance ?jugador2 (numTurnos (+ ?nT 1))) habria que cambiar el numero de turnos del jugador que no ha caido en la carcel
+  (printout t "Pierdes un turno, has caido en la carcel" crlf) 
+  (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
+)
 
 ;;Reglas de la Rayuela
 ;; preguntas

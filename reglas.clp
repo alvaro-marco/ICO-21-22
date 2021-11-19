@@ -74,6 +74,34 @@
   (printout t "De oca en oca y tiro porque me toca" crlf) 
   (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
 )
+;PREGUNTAS
+;SE PUEDE HACER NOMBRE JUEGO ?NOMJUEGO Y HACERLO PARA AMBAS, CON EL VALOR DE RONDAS SE DEBERÍA PODER CREO
+
+(defrule Casillafin
+  ;;Condiciones necesarias
+  ;; el numero de rondas para ganar de juego tiene que ser el mismo que el numero de rondas ganadas para el jugador
+  ;; 1 para la oca y 3 para la rayuela
+  ;; la casilla tiene que ser de tipo final
+  ;; el juego de la sesion no se define para que puedan ser ambos
+  (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam)) ;; Que exista una sesión
+  ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)) ;; Que la fase de juego sea tirar dado/piedra
+  ;;Instancias necesarias
+  ?juego <- (object(is-a JUEGO) (nombre ?juego) (rondas ?rondas)) 
+  ?jugador <- (object(is-a JUGADOR)(posicion ?posJug)(rondasGanadas ?rondas))
+  ?casilla <- (object(is-a CASILLA)(nombreJuego ?juego)(tipo final)(posicion ?posCas))
+   ; si es solo para la oca posicion seria 40, sino no hace falta ponerlo 
+  (test (= ?posCas (+ ?posJug ?dado)))
+  
+  =>
+  (modify-instance ?jugador (posicion (+ ?posJug ?dado)));;Sumamos el avance marcado en el dado
+  (modify-instance ?turno (fase fin));; Cambio de fase para que juegue el siguiente
+  (printout t  "Avanzo " ?dado " casillas, hasta la posición " (+ ?posJug ?dado) crlf)
+  (printout t "¡¡Fin del juego!! se ha llegado a la casilla final")
+  (halt)
+)
+  
+  
+  
 
 ; (defrule CasillaEspera
 ;   ;;Condiciones necesarias

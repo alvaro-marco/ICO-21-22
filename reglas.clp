@@ -113,15 +113,17 @@
 (defrule CasillaEspera
   ;;Condiciones necesarias
   (object (is-a SESION) (nombreJuego oca) (nombreBambino ?bam)) ;; Que exista una sesión
-  ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)(jugador ?nomJug)) ;; Que la fase de juego sea tirar dado/piedra
+  ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)(jugador ?nomJug)) ;; Que la fase de juego sea movimiento
   ;;Instancias necesarias
-  ?jugador <- (object(is-a JUGADOR)(posicion ?posJug)(nombre ?nomJug))
-  ?casilla <- (object(is-a CASILLA)(nombreJuego oca)(tipo espera)(posicion ?posCas))
+  ?jugador1 <- (object(is-a JUGADOR)(posicion ?posJug1)(nombre ?nomJug))
+  ?jugador2 <- (object(is-a JUGADOR)(posicion ?posJug2)(nombre ?nomJug2)(numTurnos ?otroTurnos ))
+  ?casilla <- (object(is-a CASILLA)(nombreJuego oca)(tipo espera)(posicion ?posCas)(mensaje ?mensaje))
   (test (= ?posCas (+ ?posJug ?dado)))
   =>
-  (modify-instance ?jugador (posicion (+ ?posJug ?dado)));;Sumamos el avance marcado en el dado
+  (modify-instance ?jugador1 (posicion (+ ?posJug ?dado)));;Sumamos el avance marcado en el dado
+  (modify-instance ?jugador2 (numTurnos + (?otroTurnos 1)))
   ;; (modify-instance ?jugador2 (numTurnos (+ ?nT 1))) habria que cambiar el numero de turnos del jugador que no ha caido en la carcel
-  (printout t "Pierdes un turno, has caido en la carcel" crlf) 
+  (printout t ?mensaje crlf) 
   (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
 )
 

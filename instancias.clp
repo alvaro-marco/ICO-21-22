@@ -94,3 +94,4 @@
     (of CASILLA (tipo normal)(posicion 39)(nombreJuego oca))
     (of CASILLA (tipo final)(posicion 40)(nombreJuego oca)(mensaje "¡Tenemos un ganador!"))
 )
+

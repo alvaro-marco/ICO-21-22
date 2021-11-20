@@ -1,17 +1,17 @@
-(deftemplate siguiente
-    (slot jugador1 (type STRING))
-    (slot jugador2 (type STRING))
+(defclass SIGUIENTETURNO (is-a USER)
+    (slot jugador1 (type SYMBOL))
+    (slot jugador2 (type SYMBOL))
 )
 
 (defclass SESION (is-a USER)
     (slot nombreJuego (type SYMBOL)(allowed-values oca rayuela))
-    (slot nombreBambino (type STRING))
+    (slot nombreBambino (type SYMBOL))
 )
 (defclass JUGADOR (is-a USER)
     (slot rondasGanadas (type INTEGER)(default 0))
     (slot posicion (type INTEGER)(default 0))
     (slot numTurnos (type INTEGER)(default 1))
-    (slot nombre (type STRING))
+    (slot nombre (type SYMBOL))
 )
 (defclass BAMBINO (is-a JUGADOR)
     ;; Los atributos de la clase padre
@@ -29,7 +29,7 @@
     (slot rondasGanadas (source composite))
     (slot posicion (source composite))
     (slot numTurnos (source composite))
-    (slot nombre (source composite)(default "robot"))
+    (slot nombre (source composite)(default robot))
     ;;Los atributos propios
     (slot ayudasRealizadas (type INTEGER)(default 0))
 )
@@ -54,7 +54,7 @@
 
 (defclass CASILLA (is-a USER)
     (slot nombreJuego (type SYMBOL))
-    (slot tipo (type SYMBOL)(allowed-values normal inicial final espera movextra piedra)(default normal))
+    (slot tipo (type SYMBOL)(allowed-values normal inicial final espera movextra cielo piedra)(default normal))
     (slot posicion (type INTEGER)(range 0 40))
     (slot nuevoValorDado (type INTEGER)(default 0))
     (slot mensaje (type STRING))
@@ -63,9 +63,10 @@
 (defclass TURNO (is-a USER)
     (slot fase (type SYMBOL)(allowed-values saludo cambioTurno tirada movimiento fin)) 
     (slot valorDado (type INTEGER)(range 1 8))
-    (slot jugador (type STRING))
+    (slot jugador (type SYMBOL))
 )
 
 (defclass DADO (is-a USER)
-    (slot valorDado (type INTEGER)(range 1 8))
+    (slot valorDado (type INTEGER))
+    (slot juego (type SYMBOL))
 )

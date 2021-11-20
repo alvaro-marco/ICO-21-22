@@ -37,11 +37,15 @@
   ?turno <- (object (is-a TURNO) (fase tirada)(jugador ?nomJug)) ;; Que la fase de juego sea tirar dado/piedra
   ;;Instancias necesarias para la tirada
   (object (is-a DADO) (valorDado ?dado)(juego ?juego))
+  ;;?rayuela <-(object (is-a JUEGO) (nombre rayuela))
   =>
   (modify-instance ?turno (valorDado ?dado)(fase movimiento)) ;; Cambiamos el valor del dado escogido y la fase de juego´
+  ;(modify-instance ?rayuela (maxCasillas (- 18 ?dado)))
   (printout t ?nomJug ": He sacado un " ?dado crlf)
-  (printout t ?nomJug ": Si estas jugando a la rayuela la piedra ha caído en la casilla" ?dado crlf)
+  (printout t ?nomJug ": Si estas jugando a la rayuela la piedra ha caído en la casilla " ?dado crlf)
 )
+
+;(defrule fallo)
 
 ; ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 ; ░░░░░░░░░░░░░░░░░▄█▀▀▀▄░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -169,19 +173,24 @@
   ;;Condiciones necesarias
   (object (is-a SESION) (nombreJuego rayuela) (nombreBambino ?bam)) ;; Que exista una sesión
   ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)(jugador ?nomJug)) ;; Que la fase de juego sea movimiento porque ya se ha tirado
+  ;; Instancias necesarias para la piedra
+                ?piedra <- (object(is-a CASILLA)(nombreJuego rayuela)(tipo normal)(posicion ?dado))
+                ?recoger <- (object(is-a CASILLA)(nombreJuego rayuela)(tipo normal)(posicion ?posRecoger))
+  
   ;;Instancias necesarias
+  ?rayuela <- (object(is-a JUEGO)(nombre rayuela)(maxCasillas ?posRecoger))
   ?jugador <- (object(is-a JUGADOR)(posicion ?posJug)(nombre ?nomJug))
   ?casilla <- (object(is-a CASILLA)(nombreJuego rayuela)(tipo normal)(posicion ?posCas))
-  ?piedra <- (object(is-a CASILLA)(nombreJuego rayuela)(tipo normal)(posicion ?dado))
-  ?posRecoger <- (object (- 18 ?dado))
-  ?recoger <- (object(is-a CASILLA)(nombreJuego rayuela)(tipo normal)(posicion ?posRecoger))
   (test (not (= ?dado (+ ?posJug 1))))
+  (test (not (= ?posRecoger (+ ?posJug 1))))
+  (test (= ?posCas (+ ?posJug 1)))
   =>
   (modify-instance ?jugador (posicion (+ ?posJug 1)));;Sumamos el salto
   (printout t  ?nomJug ": Estoy en la posición " ?posJug ", salto 1 casilla" crlf)
-  ;; Registramos en que casilla ha caido la piedra
-  (modify-instance ?piedra (tipo piedra)(mensaje "Salto la casilla de la piedra"))
-  (modify-instance ?recoger (tipo piedra)(mensaje "Recojo la piedra"))
+  (printout t "--- Modificadas las casillas " ?dado " y " ?posRecoger crlf)
+                ;; Registramos en que casilla ha caido la piedra
+                (modify-instance ?piedra (tipo piedra)(mensaje "Salto la casilla de la piedra"))
+                (modify-instance ?recoger (tipo piedra)(mensaje "Recojo la piedra"))
 )
 
 (defrule saltarRecogerPiedra
@@ -236,3 +245,5 @@
   (printout t  ?nomJug ": ¡He completado las tres rondas y por lo tanto he ganado!" crlf)
   (halt)
 )
+
+

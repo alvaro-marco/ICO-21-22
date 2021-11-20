@@ -4,7 +4,7 @@
     (of BAMBINO (nombre Franchesca)(saludo "General Kenoby")(personalidad torpe))
 )
 (definstances juegos
-    (of JUEGO (nombre oca)(maxCasillas 40)(rondas 1))
+    ;(of JUEGO (nombre oca)(maxCasillas 40)(rondas 1))
     (of JUEGO (nombre rayuela)(maxCasillas 6)(rondas 3))
 )
 

@@ -61,7 +61,7 @@
 )
 
 (defclass TURNO (is-a USER)
-    (slot fase (type SYMBOL)(allowed-values saludo cambioTurno tirada movimiento fin)) 
+    (slot fase (type SYMBOL)(allowed-values saludo cambioTurno tirada movimiento movimiento2 fin)) 
     (slot valorDado (type INTEGER)(range 1 8))
     (slot jugador (type SYMBOL))
 )

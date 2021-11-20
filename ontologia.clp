@@ -1,3 +1,8 @@
+(deftemplate siguiente
+    (slot jugador1 (type STRING))
+    (slot jugador2 (type STRING))
+)
+
 (defclass SESION (is-a USER)
     (slot nombreJuego (type SYMBOL)(allowed-values oca rayuela))
     (slot nombreBambino (type STRING))

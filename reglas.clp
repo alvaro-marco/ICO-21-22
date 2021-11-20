@@ -18,6 +18,8 @@
     ;;Creamos el turno, cambiamos la fase y eliminamos la instancia del otro niño
     (send ?elOtro delete)
     (make-instance of TURNO (fase tirada)(jugador "robot")) ;; Creamos la instancia sesión para consultar en el resto de reglas
+    ; (assert (siguiente)("robot" ?bam))
+    ; (assert (siguiente )(?bam "robot"))
 )
 
 
@@ -32,22 +34,45 @@
   (printout t "He sacado un " ?dado crlf)
 )
 
-(defrule CambiarTurnoaBambino
+(defrule CambiarTurno
   (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam))
-  ?turno <- (object (is-a TURNO) (fase cambioTurno)(jugador "robot"))
+  ?turno <- (object (is-a TURNO) (fase cambioTurno)(jugador ?jug))
+  next <-(siguiente (jugador1 ?jug) (jugador2 ?jug1))
   =>
-  (printout t "Venga, ahora es tu turno, bambino" crlf)
-  (modify-instance ?turno (jugador ?bam)(fase tirada))
-)
-(defrule CambiarTurnoaRobot
-  (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam))
-  ?turno <- (object (is-a TURNO) (fase cambioTurno)(jugador ?bam))
-  =>
-  (printout t "Te toca a tí, señor robot" crlf)
-  (modify-instance ?turno (jugador "robot")(fase tirada))
+  (printout t "Cambio de turno" crlf)
+  (modify-instance ?turno (jugador ?jug1)(fase tirada))
 )
 
+; (defrule CambiarTurnoaBambino
+;   (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam))
+;   ?turno <- (object (is-a TURNO) (fase cambioTurno)(jugador "robot"))
+;   =>
+;   (printout t "Venga, ahora es tu turno, bambino" crlf)
+;   (modify-instance ?turno (jugador ?bam)(fase tirada))
+; )
+; (defrule CambiarTurnoaRobot
+;   (object (is-a SESION) (nombreJuego ?juego) (nombreBambino ?bam))
+;   ?turno <- (object (is-a TURNO) (fase cambioTurno)(jugador ?bam))
+;   =>
+;   (printout t "Te toca a tí, señor robot" crlf)
+;   (modify-instance ?turno (jugador "robot")(fase tirada))
+; )
 
+
+; ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░░░░░░░▄▀▀▀▀▀█▄░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░░░░░█▀▌░▄░░░░░░█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░░░█▀░░▐░░░░░░░░░▌░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░▄█░░░░█░░░░░░░░░▌░░░░░░░░░░░░░░░░▄▄▄▄░░░░░░░░░░░░░░░░░░░░░░░
+; ░░▀▀▀█▄▄█░░░░░░░░█░░░░░░░░░░░░░░░░█░░░░▀░░░░░░█▀▀░░░░░░░░█░░░░
+; ░░░░░░░░█▀▀▀▀▀▀▀░▀▀▀█▄░░░░░░░░░░░█░░░░░░░▌░░░█░░░░░░░░░░█▐▌░░░
+; ░░░░░░░▄░░░░░░░░░░░░░░░█▄░░░░░░░▐░░░░░░░░▌░░█░░░░░░░░░░█░▐░░░░
+; ░░░░░░░▌░░░░░░░░░░░░░░░░░█░░░░░░▐░░░░░░░░▌░█░░░░░░░░░░█░░░▌░░░
+; ░░░░░░▐░░░░░░░░░░░░░░░░░░░█░░░░░▐░░░░░░░█░░▌░░░░░░░░░██▀▀▀█░░░
+; ░░░░░░▌░░░░░░░░░░░░░░░░░░░░▌░░░░██░░░░░█░░▐░░░░░░░░░▐░░░░░█░░░
+; ░░░░░░▀▀█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▀░░░░░░░▀█▄█▀░░░▐▄░░░░▄░░░▌░░░░░░░░░
+; ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▀▀▀▀░░░░░░░░░░░░░░
+; ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 (defrule CasillaNormalOca
   ;;Condiciones necesarias
   (object (is-a SESION) (nombreJuego oca) (nombreBambino ?bam)) ;; Que exista una sesión
@@ -104,11 +129,7 @@
   (halt)
 )
   
-  (defrule SaltaRayuela
-  (object (is-a SESION) (nombreJuego rayuela) (nombreBambino ?bam)) 
-  
-  )
-  
+ 
 
 (defrule CasillaEspera
   ;;Condiciones necesarias
@@ -127,6 +148,24 @@
   (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
 )
 
+; ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░░░░░░░░▄▄▄▄▄▄░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░░░░░░█▀░░░░░░▀█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░░░░▄▀░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░░░█░░░░░░░░░░░░▄█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░░░▀▀▀▀▀██▀▀██▀▀░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░░░░░░░░▐░░░░▌░░░░░░░░░░░░░░░▄░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░░▄▄▄▄▄▄█▄▄▄▄█░░░░░░░░░░░░░▐▀░█░░░░░░░▄░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░▐░░░▌░░▐░░░░█▀▀▀█▀▀█░░░░░░▌░░░▌░░░░░▀▐░░░░░░░░▌░░░░░░░░░░░░░░░░░░░░░░░░░▄░░░░░░░░░░░░░░░░░░░░
+; ░░▐░░░▌░░▐░░░░▌░░░█░░░▌░░░░░▌░▄█░░░░░▐░░▌░░░█░░█░░▐░░░█░░▐▀▀▀░░░░█░░░░░░░█░▌░░░░░░░░░░░░░░░░░░░
+; ░░▐▄▄▄█▄▄█▄▄▄▄█▄▄▄█▄▄▄▌░░░░▐██░░░░░░░█░░▐░░░░██░░░█░░░▐░░█░░░░░░░▌░░░░░░░▌░█░░░░░░░░░░░░░░░░░░░
+; ░░░░░░░░░█░░░░▌░░░░░░░░░░░░▐░█░░░░░░▐▄▄▄█░░░░▐░░░░▌░░░▐░░▌▄█▀░░░▐░░░░░░░█▄▄█░░░░░░░░░░░░░░░░░░░
+; ░░░░░░░░░█▄▄▄▄█░░░░░░░░░░░░█░░█░░░░░█░░░▐░░░░▌░░░░▌░░░█░░▌░░░░░░▐░░░░░░░▌░░░▌░░░░░░░░░░░░░░░░░░
+; ░░░░░░░░░▌░░░░▌░░░░░░░░░░░░▌░░░▀▄░░░▌░░░░▌░░█░░░░░▌░░█░░░█▄▄▄▄░░▐░░░░░░▐░░░░▄░░░░░░░░░░░░░░░░░░
+; ░░░░░░░░▐▄▄▄▄▄▌░░░░░░░░░░░░▀░░░░░█░░░░░░░░░░▌░░░░░░█▀░░░░░░░░░░░▐▄▄▄▄░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░░░░░░░▐░░░░░▌░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░░░░░░░▐▄▄▄▄▄▌░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+; ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 ;;Reglas de la Rayuela
 ;; preguntas
 ;; el jugador salta y completara una ronda si se cumplen las siguientes condiciones:
@@ -144,30 +183,16 @@
 ;; como se avanza 
 ;; como se retrocede
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-;; Inspiración y formato BORRAR---------------------------------------------------------------------------------
-  ; (defrule r-ACTIVIDAD-2
-  ; (object (is-a A-2-ENTRADA) (entrada ?e) (salida ?sal) (recurso ?r) (entrada-2 ?e2) (duracion ?d))
-  ; (object (is-a RECURSO) (nombre ?r) (estado on))
-  ; ?pr1<- (object (is-a PRODUCTO) (nombre ?e))
-  ; ?pr2<- (object (is-a PRODUCTO) (nombre ?e2))
-  ; ?dur <- (tiempo ?t)
-  ; =>
-  ; (retract ?dur)
-  ; (assert (tiempo (+ ?t ?d)))
-  ; (unmake-instance ?pr1 ?pr2)
-  ; (make-instance of PRODUCTO-ELABORADO (nombre ?sal))
-  ; (printout t "Los productos " ?e ", " ?e2 " se transforman en " ?sal crlf)
-  ; (printout t "El proceso lleva " (+ ?t ?d) " horas" crlf))
+(defrule saltaRayuela
+ ;;Condiciones necesarias
+  (object (is-a SESION) (nombreJuego rayuela) (nombreBambino ?bam)) ;; Que exista una sesión
+  ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)(jugador ?nomJug)) ;; Que la fase de juego sea tirar dado/piedra
+  ;;Instancias necesarias
+  ?jugador <- (object(is-a JUGADOR)(posicion ?posJug)(nombre ?nomJug))
+  ?casilla <- (object(is-a CASILLA)(nombreJuego oca)(tipo normal)(posicion ?posCas))
+  (test (= ?posCas (+ ?posJug ?dado)))
+  =>
+  (modify-instance ?jugador (posicion (+ ?posJug ?dado)));;Sumamos el avance marcado en el dado
+  (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
+  (printout t  "Estoy en la posicion " ?posJug ", avanzo " ?dado " casillas, hasta la posición " (+ ?posJug ?dado) crlf)
+)

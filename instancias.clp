@@ -44,11 +44,9 @@
     (of DADO (valorDado 4)(juego rayuela))
     (of DADO (valorDado 5)(juego rayuela))
     (of DADO (valorDado 6)(juego rayuela))
-    (of DADO (valorDado 7)(juego rayuela))
-    (of DADO (valorDado 8)(juego rayuela))
-    (of DADO (valorDado 9)(juego rayuela))
-    ; (of DADO (valorDado 7)) ;; Los valores a partir de 6 se considerán fallos
-    ; (of DADO (valorDado 8))
+    ; (of DADO (valorDado 7)(juego rayuela))
+    ; (of DADO (valorDado 8)(juego rayuela))
+    ; (of DADO (valorDado 9)(juego rayuela))
 )
 ;Había hecho una casilla tipo inicial y al final no la he utilizado
 (definstances casillaRayuela ;; El valor piedra se definirá en la tirada de cada jugador
@@ -71,6 +69,8 @@
     (of CASILLA (posicion 16)(nombreJuego rayuela))
     (of CASILLA (posicion 17)(nombreJuego rayuela))
     (of CASILLA (tipo final)(posicion 18)(nombreJuego rayuela)(mensaje "¡He completado una ronda!"))  ;; la casilla final es el cielo
+    (of CASILLA (tipo final)(posicion 19)(nombreJuego rayuela)(mensaje "¡He completado una ronda!"))  ;; la casilla final es el cielo
+
 )
 
 (definstances casillaOca

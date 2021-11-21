@@ -12,7 +12,7 @@
     (printout t "robot: ¡Hola, " ?bam "! " ?sal  crlf)
     (printout t ?bam ": " ?salBambino crlf)
     ;;Reglas
-    (printout t "robot: Te cuento las reglas:" ?r crlf)
+    (printout t "robot: Te cuento las reglas: " ?r crlf)
     (printout t ?bam ": ¡Entendido!" crlf)
     (printout t "robot: Venga, entonces empiezo yo, así ves como se juega" crlf)
     ;;Creamos el turno, cambiamos la fase y eliminamos la instancia del otro niño
@@ -37,7 +37,9 @@
   ?turno <- (object (is-a TURNO) (fase tirada)(jugador ?nomJug)) ;; Que la fase de juego sea tirar dado/piedra
   ;;Instancias necesarias para la tirada
   (object (is-a DADO) (valorDado ?dado)(juego ?juego))
+  ?rayuela <- (object (is-a JUEGO)(nombre rayuela)(maxCasillas ?piedraVuelta))
   =>
+  (modify-instance ?rayuela (maxCasillas (- 18 ?dado))) ;; Guardamos el valor de la vuelta de la rayuela
   (modify-instance ?turno (valorDado ?dado)(fase movimiento)) ;; Cambiamos el valor del dado escogido y la fase de juego´
   (printout t ?nomJug ": He sacado un " ?dado crlf)
 )
@@ -160,10 +162,9 @@
 ;; se salta de uno en uno?
 ;; como se avanza 
 ;; como se retrocede
-
 (defrule saltaUnaRayuela
   ;;Condiciones necesarias
-  (object (is-a SESION)(nombreJuego rayuela)(nombreBambino ?bam))
+  (object (is-a SESION)(nombreJuego rayuela))
   (object (is-a TURNO)(fase movimiento)(valorDado ?valDado)(jugador ?nomJug))
   ;;Instancias necesarias
   ?jugador <- (object (is-a JUGADOR)(nombre ?nomJug)(posicion ?posJug))
@@ -172,7 +173,31 @@
   (test (= (+ ?posJug 1) ?posCas))
   =>
   (modify-instance ?jugador(posicion (+ 1 ?posJug)))
-  (printout t ?nomJug ": Avanzo hasta la casilla " (+ 1 ?posJug) crlf)
+  (printout t ?nomJug ": Salto a la casilla " (+ 1 ?posJug) crlf)
+)
+(defrule saltarPiedra
+  ;; Condiones necesarias
+  (object (is-a SESION)(nombreJuego rayuela))
+  (object (is-a TURNO)(fase movimiento)(valorDado ?valDado)(jugador ?nomJug))
+  ;; Instancias necesarias
+  ?jugador <- (object (is-a JUGADOR)(nombre ?nomJug)(posicion ?posJug))
+  (object(is-a CASILLA)(posicion ?posCas)(tipo piedra)(mensaje ?mensaje))
+  (test (= ?posCas (+ 1 ?posJug)))
+  =>
+  (modify-instance ?jugador (posicion (+ 2 ?posJug)))
+  (printout t ?nomJug ": " ?mensaje ", a la casilla " (+ 2 ?posJug) crlf)
+)
+(defrule setPiedra
+  (declare (salience 10));; Esto tenemos que ver como hacerlo sin salience para que no se ejecute antes una de salto sin poner la piedra ------------------------------------------
+  (object (is-a SESION)(nombreJuego rayuela))
+  (object (is-a TURNO)(valorDado ?posPiedra)(fase movimiento))
+  (object (is-a JUEGO)(nombre rayuela)(maxCasillas ?posPiedraVuelta))
+  ?casillaIda <- (object (is-a CASILLA)(posicion ?posPiedra)(tipo normal)(nombreJuego rayuela))
+  ?casillaVuelta <- (object (is-a CASILLA)(posicion ?posPiedraVuelta)(tipo normal)(nombreJuego rayuela))
+  =>
+  (modify-instance ?casillaIda (tipo piedra)(mensaje "Salto la piedra que no la quiero pisar"))
+  (modify-instance ?casillaVuelta (tipo piedra)(mensaje "Recojo la piedra que no quiero perderla"))
+  (printout t "La casilla " ?posPiedra " y "?posPiedraVuelta" van a ser la piedra"crlf)
 )
 (defrule finRondaRayuela
   ;; Condiciones necesarias
@@ -180,6 +205,7 @@
   ?turno <- (object (is-a TURNO)(fase movimiento)(jugador ?nomJug))
   ;; Instancias necesarioas
   ?jugador <- (object (is-a JUGADOR)(nombre ?nomJug)(posicion 17)(rondasGanadas ?ronGan))
+  ;(test (or (= ?posJug 17)(= ?posJug 18)))
   =>
   (modify-instance ?jugador (rondasGanadas (+ 1 ?ronGan))(posicion 0))
   (modify-instance ?turno (fase cambioTurno))
@@ -189,10 +215,9 @@
   ;;Condiciones necesarias
   (object (is-a SESION)(nombreJuego rayuela))
   (object (is-a JUEGO)(nombre rayuela)(rondas ?maxRon))
-  ?turno <- (object (is-a TURNO)(fase movimiento)(jugador ?nomJug))
-
-  ?jugador <- (object (is-a JUGADOR)(posicion ?posJug)(rondasGanadas ?ronGan)(nombre ?nomJug))
   (object (is-a CASILLA)(posicion ?posCas)(tipo final))
+  ?turno <- (object (is-a TURNO)(fase movimiento)(jugador ?nomJug))
+  ?jugador <- (object (is-a JUGADOR)(posicion ?posJug)(rondasGanadas ?ronGan)(nombre ?nomJug))
   (test (= ?posCas (+ 1 ?posJug)))
   (test (= ?maxRon ?ronGan))
   =>
@@ -201,224 +226,3 @@
   (printout t ?nomJug " : ¡He ganado la ronda " (+ 1 ?ronGan)", ergo he ganado el juego!"crlf)
 
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-; ;; casillas tipo normal piedra cielo
-; (defrule saltaRayuela
-;   ;;Condiciones necesarias
-;   (object (is-a SESION) (nombreJuego rayuela) (nombreBambino ?bam)) ;; Que exista una sesión
-;   ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)(jugador ?nomJug)) ;; Que la fase de juego sea movimiento porque ya se ha tirado
-;   ;; Instancias necesarias para la piedra
-;                 ?piedra <- (object(is-a CASILLA)(nombreJuego rayuela)(tipo normal)(posicion ?dado))
-;                 ?recoger <- (object(is-a CASILLA)(nombreJuego rayuela)(tipo normal)(posicion ?posRecoger))
-  
-;   ;;Instancias necesarias
-;   ?rayuela <- (object(is-a JUEGO)(nombre rayuela)(maxCasillas ?posRecoger))
-;   ?jugador <- (object(is-a JUGADOR)(posicion ?posJug)(nombre ?nomJug))
-;   ?casilla <- (object(is-a CASILLA)(nombreJuego rayuela)(tipo normal)(posicion ?posCas))
-;   (test (not (= ?dado (+ ?posJug 1))))
-;   (test (not (= ?posRecoger (+ ?posJug 1))))
-;   (test (= ?posCas (+ ?posJug 1)))
-;   =>
-;   (modify-instance ?turno (fase cambioTurno))
-;   (modify-instance ?jugador (posicion (+ ?posJug 1)));;Sumamos el salto
-;   (printout t  ?nomJug ": Estoy en la posición " ?posJug ", salto 1 casilla" crlf)
-;   (printout t "--- Modificadas las casillas " ?dado " y " ?posRecoger crlf)
-;                 ;; Registramos en que casilla ha caido la piedra
-;                 (modify-instance ?piedra (tipo piedra)(mensaje "Salto la casilla de la piedra"))
-;                 (modify-instance ?recoger (tipo piedra)(mensaje "Recojo la piedra"))
-; )
-
-; (defrule saltarRecogerPiedra
-;   (object (is-a SESION) (nombreJuego rayuela) (nombreBambino ?bam)) ;; Que exista una sesión
-;   ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)(jugador ?nomJug)) ;; Que la fase de juego sea movimiento porque ya se ha tirado
-;   ;;Instancias necesarias
-;   ?jugador <- (object(is-a JUGADOR)(posicion ?posJug)(nombre ?nomJug))
-;   ?casilla <- (object(is-a CASILLA)(nombreJuego rayuela)(tipo piedra)(posicion ?posCas)(mensaje ?msj))
-;   (test (= ?dado (+ ?posJug 1))) ; si la siguiente es la casilla en la que esta la piedra
-;   => 
-;   (modify-instance ?jugador (posicion (+ ?posJug 2)));;Sumamos el salto doble
-;   (printout t  ?nomJug ": Estoy en la posicion " ?posJug ", sin pisar la casilla de la piedra" crlf)
-; )
-
-; (defrule finRondaRayuela
-;  (object (is-a SESION) (nombreJuego rayuela) (nombreBambino ?bam)) ;; Que exista una sesión
-;   ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)(jugador ?nomJug)) ;; Que la fase de juego sea movimiento porque ya se ha tirado el dado
-;   ;;Instancias necesarias
-;   ?juego <- (object(is-a JUEGO) (nombre rayuela)) 
-;   ?jugador <- (object(is-a JUGADOR)(posicion ?posJug)(nombre ?nomJug))
-;   ?casilla <- (object(is-a CASILLA)(nombreJuego rayuela)(tipo final)(posicion ?posCas)(mensaje ?mensaje))
-;    ; si es solo para la oca posicion seria 40, sino no hace falta ponerlo 
-;   (test (= ?posCas ?posJug ))
-;   =>
-;   ;;este primer modify instance creo que no haría falta porque ya sSe sabría con el test de arriba que se ha llegado al final, 
-;   ;; no hace falta cambiar la posición del jugador porque no se va a utilizar despues, se termina el juego 
-;   (modify-instance ?turno (fase fin));; Cambio de fase para que juegue el siguiente
-;   (printout t  ?nomJug ": Avanzo " ?dado " casillas, hasta la posición " (+ ?posJug ?dado) crlf)
-;   (printout t  ?nomJug ": " ?mensaje crlf)
-
-; )
-
-; (defrule CasillafinRayuela
-;   ;; Condiciones necesarias
-;   ;; el numero de rondas para ganar de juego tiene que ser el mismo que el numero de rondas ganadas para el jugador
-;   ;; 1 para la oca y 3 para la rayuela
-;   ;; la casilla tiene que ser de tipo final
-;   ;; el juego de la sesion no se define para que puedan ser ambos
-;   (object (is-a SESION) (nombreJuego rayuela) (nombreBambino ?bam)) ;; Que exista una sesión
-;   ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)(jugador ?nomJug)) ;; Que la fase de juego sea movimiento porque ya se ha tirado el dado
-;   ;;Instancias necesarias
-;   ?juego <- (object(is-a JUEGO) (nombre rayuela)(rondas ?numRondas)) 
-;   ?jugador <- (object(is-a JUGADOR)(posicion ?posJug)(nombre ?nomJug)(rondasGanadas ?ganadas))
-;   ?casilla <- (object(is-a CASILLA)(nombreJuego rayuela)(tipo final)(posicion ?posCas)(mensaje ?mensaje))
-;    ; si es solo para la oca posicion seria 40, sino no hace falta ponerlo 
-;   (test (= ?numRondas ?ganadas))
-;   =>
-;   ;;este primer modify instance creo que no haría falta porque ya sSe sabría con el test de arriba que se ha llegado al final, 
-;   ;; no hace falta cambiar la posición del jugador porque no se va a utilizar despues, se termina el juego 
-;   (modify-instance ?turno (fase fin));; Cambio de fase para que juegue el siguiente
-;   (printout t  ?nomJug ": Avanzo " ?dado " casillas, hasta la posición " (+ ?posJug ?dado) crlf)
-;   (printout t  ?nomJug ": ¡He completado las tres rondas y por lo tanto he ganado!" crlf)
-;   (halt)
-; )
-
-

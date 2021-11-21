@@ -1,0 +1,135 @@
+         CLIPS (6.4 2/9/21)
+CLIPS> (load ontologia.clp)
+###########
+TRUE
+CLIPS> (load pruebaRayuelaTorpe.clp)
+@@@@@@
+TRUE
+CLIPS> (load reglas.clp)
+************
+TRUE
+CLIPS> (set-strategy random)
+depth
+CLIPS> (set-strategy random)
+random
+CLIPS> (reset)
+CLIPS> (run)
+----- Creando sesión de rayuela con Franchesca
+robot: ¡Hola, Franchesca! ¡Estoy aquí abajo pequeñin! Vamos a jugar a la rayuela
+Franchesca: ¡General Kenoby!
+robot: Te cuento las reglas: En este juego hay que tirar la piedra para que caiga en una casilla, habrá que saltar de casilla en casilla a la pata coja sin pisar la de la piedra y en el camino de vuelta recogerla. Ten cuidado no te caigas
+Franchesca: ¡Entendido!
+robot: Venga, entonces empiezo yo, así ves como se juega
+robot: He sacado un 2
+La casilla 2 y 16 van a ser la piedra
+robot: Salto a la casilla 1
+robot: Salto la piedra que no la quiero pisar, a la casilla 3
+robot: Salto a la casilla 4
+robot: Salto a la casilla 5
+robot: Salto a la casilla 6
+robot: Salto a la casilla 7
+robot: Salto a la casilla 8
+robot: Salto a la casilla 9
+robot: Salto a la casilla 10
+robot: Salto a la casilla 11
+robot: Salto a la casilla 12
+robot: Salto a la casilla 13
+robot: Salto a la casilla 14
+robot: Salto a la casilla 15
+robot: Recojo la piedra que no quiero perderla, a la casilla 17
+robot: He ganado la ronda 1 Te toca a tí ahora
+Cambio de turno, ahora le toca a Franchesca
+Franchesca: He sacado un 1
+Franchesca: Uy, ¿ésto es trampa?
+---ANALISIS: Franchesca está normal
+robot: ¡Has pisado una línea! Venga, no te preocupes, que nadie estaba mirando
+Franchesca: Ay, he pisado algo
+---ANALISIS: Franchesca está normal
+robot: ¡Has pisado la casilla de la piedra! Venga, no te preocupes, que nadie estaba mirando
+Franchesca: Ay, me he caido
+---ANALISIS: Franchesca está tirado
+robot: No pasa nada porque te hayas caído, inténtalo otra vez, que ya verás que esta vez lo consigues
+La casilla 1 y 17 van a ser la piedra
+Franchesca: Salto la piedra que no la quiero pisar, a la casilla 2
+Franchesca: Salto a la casilla 3
+Franchesca: Salto a la casilla 4
+Franchesca: Salto a la casilla 5
+Franchesca: Salto a la casilla 6
+Franchesca: Salto a la casilla 7
+Franchesca: Salto a la casilla 8
+Franchesca: Salto a la casilla 9
+Franchesca: Salto a la casilla 10
+Franchesca: Salto a la casilla 11
+Franchesca: Salto a la casilla 12
+Franchesca: Salto a la casilla 13
+Franchesca: Salto a la casilla 14
+Franchesca: Salto a la casilla 15
+Franchesca: Salto a la casilla 16
+Franchesca: Recojo la piedra que no quiero perderla, a la casilla 18
+Franchesca: He ganado la ronda 1 Te toca a tí ahora
+Cambio de turno, ahora le toca a robot
+robot: He sacado un 3
+La casilla 3 y 15 van a ser la piedra
+robot: Salto a la casilla 1
+robot: Salto a la casilla 2
+robot: Salto la piedra que no la quiero pisar, a la casilla 4
+robot: Salto a la casilla 5
+robot: Salto a la casilla 6
+robot: Salto a la casilla 7
+robot: Salto a la casilla 8
+robot: Salto a la casilla 9
+robot: Salto a la casilla 10
+robot: Salto a la casilla 11
+robot: Salto a la casilla 12
+robot: Salto a la casilla 13
+robot: Salto a la casilla 14
+robot: Recojo la piedra que no quiero perderla, a la casilla 16
+robot: Salto a la casilla 17
+robot: He ganado la ronda 2 Te toca a tí ahora
+Cambio de turno, ahora le toca a Franchesca
+Franchesca: Estoy fuertísimo
+---ANALISIS: Franchesca está normal
+robot: ¡Uy! Se te ha ido fuera la piedra. ¡Prueba a tirar otra vez!
+Franchesca: He sacado un 4
+Franchesca: Uy, ¿ésto es trampa?
+---ANALISIS: Franchesca está normal
+robot: ¡Has pisado una línea! Venga, no te preocupes, que nadie estaba mirando
+La casilla 4 y 14 van a ser la piedra
+Franchesca: Salto a la casilla 1
+Franchesca: Salto a la casilla 2
+Franchesca: Salto a la casilla 3
+Franchesca: Ay, he pisado algo
+---ANALISIS: Franchesca está normal
+robot: ¡Has pisado la casilla de la piedra! Venga, no te preocupes, que nadie estaba mirando
+Franchesca: Salto la piedra que no la quiero pisar, a la casilla 5
+Franchesca: Salto a la casilla 6
+Franchesca: Salto a la casilla 7
+Franchesca: Salto a la casilla 8
+Franchesca: Salto a la casilla 9
+Franchesca: Salto a la casilla 10
+Franchesca: Salto a la casilla 11
+Franchesca: Salto a la casilla 12
+Franchesca: Salto a la casilla 13
+Franchesca: Recojo la piedra que no quiero perderla, a la casilla 15
+Franchesca: Salto a la casilla 16
+Franchesca: Salto a la casilla 17
+Franchesca: He ganado la ronda 2 Te toca a tí ahora
+Cambio de turno, ahora le toca a robot
+robot: He sacado un 6
+La casilla 6 y 12 van a ser la piedra
+robot: Salto a la casilla 1
+robot: Salto a la casilla 2
+robot: Salto a la casilla 3
+robot: Salto a la casilla 4
+robot: Salto a la casilla 5
+robot: Salto la piedra que no la quiero pisar, a la casilla 7
+robot: Salto a la casilla 8
+robot: Salto a la casilla 9
+robot: Salto a la casilla 10
+robot: Salto a la casilla 11
+robot: Recojo la piedra que no quiero perderla, a la casilla 13
+robot: Salto a la casilla 14
+robot: Salto a la casilla 15
+robot: Salto a la casilla 16
+robot: Salto a la casilla 17
+robot : ¡He ganado la ronda 3, ergo he ganado el juego!

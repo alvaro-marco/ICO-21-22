@@ -1,0 +1,130 @@
+         CLIPS (6.4 2/9/21)
+CLIPS> (load ontologia.clp)
+###########
+TRUE
+CLIPS> (load pruebaOcaTorpe.clp)
+@@@@@@
+TRUE
+CLIPS> (load reglas.clp)
+************
+TRUE
+CLIPS> (set-strategy random)
+depth
+CLIPS> (set-strategy random)
+random
+CLIPS> (reset)
+CLIPS> (run)
+----- Creando sesión de oca con Franchesca
+robot: ¡Hola, Franchesca! ¡Estoy aquí abajo pequeñin! Vamos a jugar a la oca
+Franchesca: ¡General Kenoby!
+robot: Te cuento las reglas: En este juego se tira el dado y dependiendo de la casilla en la que se caiga al sumar el valor del dado se queda uno donde esta, se avanza, se retrocede o se pierde turno. El que llegue a la Oca final antes gana el juego. ¿Te has enterado bien?
+Franchesca: ¡Entendido!
+robot: Venga, entonces empiezo yo, así ves como se juega
+robot: He sacado un 2
+robot : Estoy en la posicion 0, avanzo 2 casillas, hasta la posición 2
+Cambio de turno, ahora le toca a Franchesca
+Franchesca: He sacado un 2
+Franchesca: ¡Reconcholis y retruecanos!
+---ANALISIS: Franchesca está gritando
+robot: Vamos a tranquilizarnos, respira conmigo, uuuuuuufff aaaaaaafff uuuuuuuuf affffff
+Franchesca : Estoy en la posicion 0, avanzo 2 casillas, hasta la posición 2
+Franchesca: @#~~@#€~@#~#@#@!
+---ANALISIS: Franchesca está gritando
+robot: Vamos a tranquilizarnos, respira conmigo, uuuuuuufff aaaaaaafff uuuuuuuuf affffff
+Franchesca: Buaaaaah :'(
+---ANALISIS: Franchesca está llorando
+robot: No te preocupes, no llores, ea ea
+Cambio de turno, ahora le toca a robot
+robot: He sacado un 6
+robot : Estoy en la posicion 2, avanzo 6 casillas, hasta la posición 8
+Cambio de turno, ahora le toca a Franchesca
+Franchesca: He sacado un 4
+Franchesca: ¡Reconcholis y retruecanos!
+---ANALISIS: Franchesca está gritando
+robot: Vamos a tranquilizarnos, respira conmigo, uuuuuuufff aaaaaaafff uuuuuuuuf affffff
+Franchesca : Estoy en la posicion 2, avanzo 4 casillas, hasta la posición 6
+Franchesca: Buaaaaah :'(
+---ANALISIS: Franchesca está llorando
+robot: No te preocupes, no llores, ea ea
+Franchesca: ¡Ay, que miedo el dibujo de esa casilla!
+---ANALISIS: Franchesca está escondido
+robot: No te escondas, ¡qué no pasa nada!
+Cambio de turno, ahora le toca a robot
+robot: He sacado un 3
+robot : Estoy en la posicion 8, avanzo 3 casillas, hasta la posición 11
+Cambio de turno, ahora le toca a Franchesca
+Franchesca: He sacado un 6
+Franchesca: ¡Reconcholis y retruecanos!
+---ANALISIS: Franchesca está gritando
+robot: Vamos a tranquilizarnos, respira conmigo, uuuuuuufff aaaaaaafff uuuuuuuuf affffff
+Franchesca : Estoy en la posicion 6, avanzo 6 casillas, hasta la posición 12
+Franchesca: ¡Ay, que miedo el dibujo de esa casilla!
+---ANALISIS: Franchesca está escondido
+robot: No te escondas, ¡qué no pasa nada!
+Franchesca: @#~~@#€~@#~#@#@!
+---ANALISIS: Franchesca está gritando
+robot: Vamos a tranquilizarnos, respira conmigo, uuuuuuufff aaaaaaafff uuuuuuuuf affffff
+Franchesca: Buaaaaah :'(
+---ANALISIS: Franchesca está llorando
+robot: No te preocupes, no llores, ea ea
+Cambio de turno, ahora le toca a robot
+robot: He sacado un 6
+robot : Estoy en la posicion 11, avanzo 6 casillas, hasta la posición 17
+Cambio de turno, ahora le toca a Franchesca
+Franchesca: ¿Dónde ha ido a parar el dado?
+---ANALISIS: Franchesca está normal
+robot: ¡Uy! Se ha caído el dado fuera de la mesa. ¡Prueba a tirar otra vez!
+Franchesca: He sacado un 6
+Franchesca: ¡Reconcholis y retruecanos!
+---ANALISIS: Franchesca está gritando
+robot: Vamos a tranquilizarnos, respira conmigo, uuuuuuufff aaaaaaafff uuuuuuuuf affffff
+Franchesca : Estoy en la posicion 12, avanzo 6 casillas, hasta la posición 18
+Franchesca: ¡Ay, que miedo el dibujo de esa casilla!
+---ANALISIS: Franchesca está escondido
+robot: No te escondas, ¡qué no pasa nada!
+Cambio de turno, ahora le toca a robot
+robot: He sacado un 1
+robot : Estoy en la posicion 17, avanzo 1 casillas, hasta la posición 18
+Cambio de turno, ahora le toca a Franchesca
+Franchesca: He sacado un 4
+Franchesca : Estoy en la posicion 18, avanzo 4 casillas, hasta la posición 22
+Franchesca: Buaaaaah :'(
+---ANALISIS: Franchesca está llorando
+robot: No te preocupes, no llores, ea ea
+Cambio de turno, ahora le toca a robot
+robot: He sacado un 2
+robot: De oca en oca y tiro porque me toca
+robot:Estoy en la posicion 18, avanzo 2 casillas, hasta la posición 25
+Cambio de turno, ahora le toca a Franchesca
+Franchesca: He sacado un 1
+Franchesca : Estoy en la posicion 22, avanzo 1 casillas, hasta la posición 23
+Franchesca: @#~~@#€~@#~#@#@!
+---ANALISIS: Franchesca está gritando
+robot: Vamos a tranquilizarnos, respira conmigo, uuuuuuufff aaaaaaafff uuuuuuuuf affffff
+Franchesca: Buaaaaah :'(
+---ANALISIS: Franchesca está llorando
+robot: No te preocupes, no llores, ea ea
+Franchesca: ¡Ay, que miedo el dibujo de esa casilla!
+---ANALISIS: Franchesca está escondido
+robot: No te escondas, ¡qué no pasa nada!
+Cambio de turno, ahora le toca a robot
+robot: He sacado un 5
+robot: De oca en oca y tiro porque me toca
+robot:Estoy en la posicion 25, avanzo 5 casillas, hasta la posición 35
+Cambio de turno, ahora le toca a Franchesca
+Franchesca: ¿Dónde ha ido a parar el dado?
+---ANALISIS: Franchesca está normal
+robot: ¡Uy! Se ha caído el dado fuera de la mesa. ¡Prueba a tirar otra vez!
+Franchesca: He sacado un 4
+Franchesca: ¡Reconcholis y retruecanos!
+---ANALISIS: Franchesca está gritando
+robot: Vamos a tranquilizarnos, respira conmigo, uuuuuuufff aaaaaaafff uuuuuuuuf affffff
+Franchesca : Estoy en la posicion 23, avanzo 4 casillas, hasta la posición 27
+Franchesca: ¡Ay, que miedo el dibujo de esa casilla!
+---ANALISIS: Franchesca está escondido
+robot: No te escondas, ¡qué no pasa nada!
+Cambio de turno, ahora le toca a robot
+robot: He sacado un 5
+Avanzo 5 casillas, hasta la posición 40
+¡Soy el ganador!
+CLIPS> 

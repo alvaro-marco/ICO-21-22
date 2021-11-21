@@ -43,8 +43,14 @@
   (modify-instance ?turno (valorDado ?dado)(fase movimiento)) ;; Cambiamos el valor del dado escogido y la fase de juego´
   (printout t ?nomJug ": He sacado un " ?dado crlf)
 )
-
-;(defrule fallo)
+; (defrule fallo
+;   (object (is-a SESION)(nombreJuego ?nomJueg)(nombreBambino ?nomBan))
+;   ?turno <- (object (is-a TURNO)(fase ?fase)(jugador ?nomBan))
+;   (object (is-a BAMBINO)(nombre ?nomBan)(personalidad ?personalidad))
+;   (object (is-a LISTAREACCIONES)(nombreJuego ?nomJueg)(fase ?fase)(estado ?estado)(motivo ?motivo)(reaccion ?reaccion))
+;   =>
+;   (printout t ?nomBan ": " ?motivo crlf "---ANALISIS: " ?nomBan " está " ?estado crlf "robot: " ?reaccion crlf)
+; )
 
 ; ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 ; ░░░░░░░░░░░░░░░░░▄█▀▀▀▄░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -90,7 +96,7 @@
   =>
   (modify-instance ?jugador (posicion (+ ?sumar (+ ?posJug ?dado))));;Sumamos el avance marcado en el dado
   (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
-  (printout t ?nomJug ": " ?mensaje crlf) 
+  (printout t ?nomJug ": " ?mensaje crlf)
   (printout t  ?nomJug ":Estoy en la posicion " ?posJug ", avanzo " ?dado " casillas, hasta la posición " (+ ?sumar (+ ?posJug ?dado)) crlf)
 )
 ; (defrule CasillaEspera
@@ -106,7 +112,7 @@
 ;   (modify-instance ?jugador1 (posicion (+ ?posJug ?dado)));;Sumamos el avance marcado en el dado
 ;   (modify-instance ?jugador2 (numTurnos + (?otroTurnos 1)))
 ;   ;; (modify-instance ?jugador2 (numTurnos (+ ?nT 1))) habria que cambiar el numero de turnos del jugador que no ha caido en la carcel
-;   (printout t ?nomJug ": "?mensaje crlf) 
+;   (printout t ?nomJug ": "?mensaje crlf)
 ;   (modify-instance ?turno (fase cambioTurno));; Cambio de fase para que juegue el siguiente
 ; )
 (defrule CasillafinOca
@@ -114,16 +120,16 @@
   (object (is-a SESION) (nombreJuego oca) (nombreBambino ?bam)) ;; Que exista una sesión
   ?turno <- (object (is-a TURNO)(valorDado ?dado)(fase movimiento)(jugador ?nomJug)) ;; Que la fase de juego sea tirar dado/piedra
   ;;Instancias necesarias
-  ?juego <- (object(is-a JUEGO) (nombre oca)) 
+  ?juego <- (object(is-a JUEGO) (nombre oca))
   ?jugador <- (object(is-a JUGADOR)(posicion ?posJug)(nombre ?nomJug))
   ?casilla <- (object(is-a CASILLA)(nombreJuego oca)(tipo final)(posicion ?posCas)(mensaje ?mensaje));; la casilla tiene que ser de tipo final
-  
-  (test (< ?posCas (+ (+ ?posJug  ?dado) 1))) ; si es solo para la oca posicion seria 40, sino no hace falta ponerlo 
+
+  (test (< ?posCas (+ (+ ?posJug  ?dado) 1))) ; si es solo para la oca posicion seria 40, sino no hace falta ponerlo
   =>
-  ;;este primer modify instance creo que no haría falta porque ya sSe sabría con el test de arriba que se ha llegado al final, 
-  ;; no hace falta cambiar la posición del jugador porque no se va a utilizar despues, se termina el juego 
+  ;;este primer modify instance creo que no haría falta porque ya sSe sabría con el test de arriba que se ha llegado al final,
+  ;; no hace falta cambiar la posición del jugador porque no se va a utilizar despues, se termina el juego
   (modify-instance ?turno (fase fin));; Cambio de fase para que juegue el siguiente
-  (printout t  "Avanzo " ?dado " casillas, hasta la posición " (+ ?posJug ?dado) crlf)
+  (printout t  "Avanzo " ?dado " casillas, hasta la posición 40" crlf)
   (printout t  ?mensaje crlf)
   (halt)
 )
@@ -149,18 +155,18 @@
 ;;Reglas de la Rayuela
 ;; preguntas
 ;; el jugador salta y completara una ronda si se cumplen las siguientes condiciones:
-; el jugador no se cae 
+; el jugador no se cae
 ; el jugador no pisa una línea
 ; el jugador salta la casilla en la que está la piedra
 ; el jugador llega al final y cambia de dirección
 ; el jugador recoge la piedra
-; el jugador llega otra vez a la casilla de inicio 
+; el jugador llega otra vez a la casilla de inicio
 ; rondas ganadas += 1
 
 ;;DILEMAS
 ;; se obtiene el valor del dado
 ;; se salta de uno en uno?
-;; como se avanza 
+;; como se avanza
 ;; como se retrocede
 (defrule saltaUnaRayuela
   ;;Condiciones necesarias
@@ -177,7 +183,7 @@
   (modify-instance ?jugador(posicion (+ 1 ?posJug)))
   (printout t ?nomJug ": Salto a la casilla " (+ 1 ?posJug) crlf)
 )
-(defrule saltarPiedra
+(defrule saltarRecogePiedra
   ;; Condiones necesarias
   (object (is-a SESION)(nombreJuego rayuela))
   (object (is-a CASILLA)(nombreJuego rayuela)(tipo piedra));; Tiene que haber dos casillas de piedra, una para la ida y otra para la vuelta, pero como se instancian a la vez con que haya una mínima (máximo dos)

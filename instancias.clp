@@ -4,21 +4,21 @@
     (of BAMBINO (nombre Franchesca)(saludo "¡General Kenoby!")(personalidad torpe))
 )
 (definstances juegos
-    ; (of JUEGO (nombre oca)(maxCasillas 40)(rondas 1))
+    (of JUEGO (nombre oca)(maxCasillas 40)(rondas 1))
     (of JUEGO (nombre rayuela)(maxCasillas 6)(rondas 2))
 )
 
 ;; Definimos las intancias en las que se especifica cuales son las interacciones del robot
 (definstances listaReacciones
-    (of LISTAREACCIONES (estado llorando)(nombreJuego oca)(fase cambioTurno)(reaccion "Ea, ea, a llorar a la llorería"))
-    (of LISTAREACCIONES (estado escondido)(nombreJuego oca)(fase cambioTurno)(reaccion "No te escondas, ¡qué no pasa nada!"))
-    (of LISTAREACCIONES (estado gritando)(nombreJuego oca)(fase cambioTurno)(reaccion "Vamos a tranquilizarnos, respira conmigo, uuuuuuufff aaaaaaafff uuuuuuuuf affffff"))
-    (of LISTAREACCIONES (estado gritando)(nombreJuego oca)(fase movimiento)(reaccion "Vamos a tranquilizarnos, respira conmigo, uuuuuuufff aaaaaaafff uuuuuuuuf affffff"))
-    (of LISTAREACCIONES (estado normal)(nombreJuego oca)(fase tirada)(reaccion "¡Uy! Se ha caído el dado fuera de la mesa. ¡Prueba a tirar otra vez!"))
-    (of LISTAREACCIONES (estado tirado)(nombreJuego rayuela)(fase movimiento)(reaccion "No pasa nada porque te hayas caído, inténtalo otra vez, que ya verás que esta vez lo consigues"))
-    (of LISTAREACCIONES (estado normal)(nombreJuego rayuela)(fase tirada)(reaccion "¡Uy! Se te ha ido fuera la piedra. ¡Prueba a tirar otra vez!"))
-    (of LISTAREACCIONES (estado normal)(nombreJuego rayuela)(fase movimiento)(reaccion "¡Has pisado una línea! Tienes que empezar otra vez desde la casilla inicial"))
-    (of LISTAREACCIONES (estado normal)(nombreJuego rayuela)(fase movimiento)(reaccion "¡Has pisado la casilla de la piedra! Tienes que empezar otra vez desde la casilla inicial"))
+    (of LISTAREACCIONES (estado llorando)(nombreJuego oca)(motivo "Buaaaaah :'(")(fase cambioTurno)(reaccion "No te preocupes, no llores, ea ea"))
+    (of LISTAREACCIONES (estado escondido)(nombreJuego oca)(motivo "¡Ay, que miedo el dibujo de esa casilla!")(fase cambioTurno)(reaccion "No te escondas, ¡qué no pasa nada!"))
+    (of LISTAREACCIONES (estado gritando)(nombreJuego oca)(motivo "@#~~@#€~@#~#@#@!")(fase cambioTurno)(reaccion "Vamos a tranquilizarnos, respira conmigo, uuuuuuufff aaaaaaafff uuuuuuuuf affffff"))
+    (of LISTAREACCIONES (estado gritando)(nombreJuego oca)(motivo "¡Reconcholis y retruecanos!")(fase movimiento)(reaccion "Vamos a tranquilizarnos, respira conmigo, uuuuuuufff aaaaaaafff uuuuuuuuf affffff"))
+    (of LISTAREACCIONES (estado normal)(nombreJuego oca)(motivo "¿Dónde ha ido a parar el dado?")(fase tirada)(reaccion "¡Uy! Se ha caído el dado fuera de la mesa. ¡Prueba a tirar otra vez!"))
+    (of LISTAREACCIONES (estado tirado)(nombreJuego rayuela)(motivo "Ay, me he caido")(fase movimiento)(reaccion "No pasa nada porque te hayas caído, inténtalo otra vez, que ya verás que esta vez lo consigues"))
+    (of LISTAREACCIONES (estado normal)(nombreJuego rayuela)(motivo "Estoy fuertísimo")(fase tirada)(reaccion "¡Uy! Se te ha ido fuera la piedra. ¡Prueba a tirar otra vez!"))
+    (of LISTAREACCIONES (estado normal)(nombreJuego rayuela)(motivo "Uy, ¿ésto es trampa?")(fase movimiento)(reaccion "¡Has pisado una línea! Venga, no te preocupes, que nadie estaba mirando"))
+    (of LISTAREACCIONES (estado normal)(nombreJuego rayuela)(motivo "Ay, he pisado algo")(fase movimiento)(reaccion "¡Has pisado la casilla de la piedra! Venga, no te preocupes, que nadie estaba mirando"))
 )
 
 (definstances listaPersonalidades
@@ -39,14 +39,14 @@
     (of DADO (valorDado 5)(juego oca))
     (of DADO (valorDado 6)(juego oca))
     (of DADO (valorDado 1)(juego rayuela))
-    ; (of DADO (valorDado 2)(juego rayuela))
-    ; (of DADO (valorDado 3)(juego rayuela))
-    ; (of DADO (valorDado 4)(juego rayuela))
-    ; (of DADO (valorDado 5)(juego rayuela))
-    ; (of DADO (valorDado 6)(juego rayuela))
-    ; (of DADO (valorDado 7)(juego rayuela))
-    ; (of DADO (valorDado 8)(juego rayuela))
-    ; (of DADO (valorDado 9)(juego rayuela))
+    (of DADO (valorDado 2)(juego rayuela))
+    (of DADO (valorDado 3)(juego rayuela))
+    (of DADO (valorDado 4)(juego rayuela))
+    (of DADO (valorDado 5)(juego rayuela))
+    (of DADO (valorDado 6)(juego rayuela))
+    (of DADO (valorDado 7)(juego rayuela))
+    (of DADO (valorDado 8)(juego rayuela))
+    (of DADO (valorDado 9)(juego rayuela))
 )
 ;Había hecho una casilla tipo inicial y al final no la he utilizado
 (definstances casillaRayuela ;; El valor piedra se definirá en la tirada de cada jugador
@@ -70,7 +70,6 @@
     (of CASILLA (posicion 17)(nombreJuego rayuela))
     (of CASILLA (tipo final)(posicion 18)(nombreJuego rayuela)(mensaje "¡He completado una ronda!"))  ;; la casilla final es el cielo
     (of CASILLA (tipo final)(posicion 19)(nombreJuego rayuela)(mensaje "¡He completado una ronda!"))  ;; la casilla final es el cielo
-
 )
 
 (definstances casillaOca

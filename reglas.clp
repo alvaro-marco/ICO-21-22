@@ -166,6 +166,8 @@
   ;;Condiciones necesarias
   (object (is-a SESION)(nombreJuego rayuela))
   (object (is-a TURNO)(fase movimiento)(valorDado ?valDado)(jugador ?nomJug))
+  (object (is-a CASILLA)(nombreJuego rayuela)(tipo piedra));; Tiene que haber dos casillas de piedra, una para la ida y otra para la vuelta, pero como se instancian a la vez con que haya una mínima (máximo dos)
+  (object (is-a CASILLA)(nombreJuego rayuela)(tipo piedra))
   ;;Instancias necesarias
   ?jugador <- (object (is-a JUGADOR)(nombre ?nomJug)(posicion ?posJug))
   (object (is-a CASILLA)(tipo normal)(nombreJuego rayuela)(posicion ?posCas))
@@ -178,6 +180,7 @@
 (defrule saltarPiedra
   ;; Condiones necesarias
   (object (is-a SESION)(nombreJuego rayuela))
+  (object (is-a CASILLA)(nombreJuego rayuela)(tipo piedra));; Tiene que haber dos casillas de piedra, una para la ida y otra para la vuelta, pero como se instancian a la vez con que haya una mínima (máximo dos)
   (object (is-a TURNO)(fase movimiento)(valorDado ?valDado)(jugador ?nomJug))
   ;; Instancias necesarias
   ?jugador <- (object (is-a JUGADOR)(nombre ?nomJug)(posicion ?posJug))
@@ -188,27 +191,33 @@
   (printout t ?nomJug ": " ?mensaje ", a la casilla " (+ 2 ?posJug) crlf)
 )
 (defrule setPiedra
-  (declare (salience 10));; Esto tenemos que ver como hacerlo sin salience para que no se ejecute antes una de salto sin poner la piedra ------------------------------------------
   (object (is-a SESION)(nombreJuego rayuela))
   (object (is-a TURNO)(valorDado ?posPiedra)(fase movimiento))
   (object (is-a JUEGO)(nombre rayuela)(maxCasillas ?posPiedraVuelta))
   ?casillaIda <- (object (is-a CASILLA)(posicion ?posPiedra)(tipo normal)(nombreJuego rayuela))
   ?casillaVuelta <- (object (is-a CASILLA)(posicion ?posPiedraVuelta)(tipo normal)(nombreJuego rayuela))
   =>
-  (modify-instance ?casillaIda (tipo piedra)(mensaje "Salto la piedra que no la quiero pisar"))
-  (modify-instance ?casillaVuelta (tipo piedra)(mensaje "Recojo la piedra que no quiero perderla"))
+  (modify-instance ?casillaIda (tipo piedra)(nuevoValorDado 2)(mensaje "Salto la piedra que no la quiero pisar"))
+  (modify-instance ?casillaVuelta (tipo piedra)(nuevoValorDado 2)(mensaje "Recojo la piedra que no quiero perderla"))
   (printout t "La casilla " ?posPiedra " y "?posPiedraVuelta" van a ser la piedra"crlf)
 )
 (defrule finRondaRayuela
   ;; Condiciones necesarias
   (object (is-a SESION)(nombreJuego rayuela))
+  (object (is-a JUEGO)(nombre rayuela)(rondas ?maxRon))
   ?turno <- (object (is-a TURNO)(fase movimiento)(jugador ?nomJug))
   ;; Instancias necesarioas
-  ?jugador <- (object (is-a JUGADOR)(nombre ?nomJug)(posicion 17)(rondasGanadas ?ronGan))
-  ;(test (or (= ?posJug 17)(= ?posJug 18)))
+  ?jugador <- (object (is-a JUGADOR)(nombre ?nomJug)(posicion ?posJug)(rondasGanadas ?ronGan))
+  ?piedraIda <- (object (is-a CASILLA)(tipo piedra)(posicion ?posPiedra1))
+  ?piedraVuelta <- (object (is-a CASILLA)(tipo piedra)(posicion ?posPiedra2))
+  (test (not (= ?posPiedra1 ?posPiedra2)))
+  (test (or (= ?posJug 17)(= ?posJug 18)))
+  (test (> ?maxRon ?ronGan))
   =>
   (modify-instance ?jugador (rondasGanadas (+ 1 ?ronGan))(posicion 0))
   (modify-instance ?turno (fase cambioTurno))
+  (modify-instance ?piedraIda (tipo normal)(mensaje ""))
+  (modify-instance ?piedraVuelta (tipo normal)(mensaje ""))
   (printout t ?nomJug ": He ganado la ronda " (+ 1 ?ronGan) " Te toca a tí ahora" crlf)
 )
 (defrule finJuegoRayuela
